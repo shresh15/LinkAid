@@ -7,6 +7,8 @@ import {
   signInWithPopup,
 } from "firebase/auth";
 import { doc, getDoc } from "firebase/firestore";
+import { FaGoogle } from "react-icons/fa"; // Import Google Icon
+import { MdEmail, MdLock, MdPerson } from "react-icons/md"; // Import Email, Lock, Person Icons
 
 const AuthPage = () => {
   const [isSignUp, setIsSignUp] = useState(false);
@@ -72,56 +74,72 @@ const AuthPage = () => {
 
   return (
     <div className="h-screen flex items-center justify-center bg-gradient-to-r from-violet-500 via-purple-300 to-white">
-      <div className="bg-white p-10 rounded-lg shadow-lg text-center w-96">
-        <h1 className="text-2xl font-bold text-violet-900 mb-5">
-          {isSignUp ? "Sign Up" : "Sign In"}
+      <div className="bg-white p-8 rounded-xl shadow-lg text-center w-96">
+        <h1 className="text-3xl font-bold text-violet-900 mb-6">
+          {isSignUp ? "Create Account" : "Sign In"}
         </h1>
 
-        {error && <p className="text-red-500 mb-3">{error}</p>}
+        {error && <p className="text-red-500 mb-4">{error}</p>}
 
-        <input
-          type="email"
-          placeholder="Email"
-          className="w-full border-2 border-violet-900 rounded-full px-4 py-2 mb-3"
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          className="w-full border-2 border-violet-900 rounded-full px-4 py-2 mb-3"
-          onChange={(e) => setPassword(e.target.value)}
-        />
+        <div className="relative mb-3">
+          <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-violet-500">
+            <MdEmail />
+          </div>
+          <input
+            type="email"
+            placeholder="Email"
+            className="w-full border-2 border-violet-300 rounded-full pl-10 pr-4 py-2 focus:outline-none focus:border-violet-500"
+            onChange={(e) => setEmail(e.target.value)}
+          />
+        </div>
+
+        <div className="relative mb-4">
+          <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-violet-500">
+            <MdLock />
+          </div>
+          <input
+            type="password"
+            placeholder="Password"
+            className="w-full border-2 border-violet-300 rounded-full pl-10 pr-4 py-2 focus:outline-none focus:border-violet-500"
+            onChange={(e) => setPassword(e.target.value)}
+          />
+        </div>
 
         {isSignUp && (
-          <select
-            className="w-full border-2 border-violet-900 rounded-full px-4 py-2 mb-3"
-            onChange={(e) => setRole(e.target.value)}
-            value={role}
-          >
-            <option value="">Select Role</option>
-            <option value="user">User</option>
-            <option value="ngo">NGO</option>
-          </select>
+          <div className="relative mb-4">
+            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-violet-500">
+              <MdPerson />
+            </div>
+            <select
+              className="w-full border-2 border-violet-300 rounded-full pl-10 pr-4 py-2 focus:outline-none focus:border-violet-500"
+              onChange={(e) => setRole(e.target.value)}
+              value={role}
+            >
+              <option value="">Select Role</option>
+              <option value="user">User</option>
+              <option value="ngo">NGO</option>
+            </select>
+          </div>
         )}
 
         <button
-          className="w-full bg-violet-600 text-white py-2 rounded-full mb-3 hover:bg-violet-700"
+          className="w-full bg-violet-600 text-white py-3 rounded-full mb-4 hover:bg-violet-700 focus:outline-none focus:ring-2 focus:ring-violet-400 focus:ring-opacity-75"
           onClick={handleEmailAuth}
         >
           {isSignUp ? "Sign Up" : "Sign In"} with Email
         </button>
 
         <button
-          className="w-full bg-black text-white py-2 rounded-full hover:bg-red-600"
+          className="w-full bg-red-600 text-white py-3 rounded-full hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-400 focus:ring-opacity-75 flex items-center justify-center"
           onClick={handleGoogleSignIn}
         >
-          Sign In with Google
+          <FaGoogle className="mr-2" /> Sign In with Google
         </button>
 
-        <p className="mt-4 text-violet-900">
+        <p className="mt-6 text-violet-700">
           {isSignUp ? "Already have an account? " : "Don't have an account? "}
           <span
-            className="font-bold cursor-pointer"
+            className="font-bold cursor-pointer text-violet-900 hover:underline"
             onClick={() => setIsSignUp(!isSignUp)}
           >
             {isSignUp ? "Sign In" : "Sign Up"}
